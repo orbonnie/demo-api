@@ -1,0 +1,24 @@
+{
+  "name": "demo-api",
+  "version": "1.0.0",
+  "description": "Twilio Demo API",
+  "license": "ISC",
+  "author": "Bonnie Owens",
+  "type": "commonjs",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node --files server.ts"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2"
+  }
+}
