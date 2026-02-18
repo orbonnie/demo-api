@@ -10,6 +10,9 @@ const ENV = process.env.NODE_ENV;
 // Connect to Database
 
 // Import Routes
+import routeOne from './Routes/routeOne';
+import routeTwo from './Routes/routeTwo';
+import routeThree from './Routes/routeThree';
 
 const app = express();
 
@@ -21,6 +24,9 @@ if (ENV === "development") {
 }
 
 // Mount Routes
+app.use('/api/v1/{resources}', routeOne);
+app.use('/api/v1/{resources}', routeTwo);
+// app.use('/api/v1/{resources}', routeThree);
 
 const server = app.listen(PORT, () =>
   console.log(chalk.magenta.bold(`Server running in ${ENV} on port ${PORT}`)),
