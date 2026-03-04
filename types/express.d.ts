@@ -1,17 +1,21 @@
 import "express-serve-static-core";
 
 type Pagination = {
-  next?: { page: number; limit: number };
-  prev?: { page: number; limit: number };
-}
+      page: number;
+      limit: number;
+      totalPages: number;
+      prevPage: (number | null);
+      nextPage: (number | null);
+};
 
 declare module "express-serve-static-core" {
   interface Response {
-    advancedResults?: {
+    queryResults?: {
       success: boolean;
       count: number;
+      total: number;
       pagination: Pagination;
       data: any[];
-    };
+    }
   }
-}
+};
