@@ -10,15 +10,21 @@
     "dev": "nodemon --exec ts-node --files server.ts"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.4.1",
+    "@prisma/client": "^7.4.0",
     "chalk": "^5.6.2",
     "dotenv": "^16.4.5",
     "express": "^5.2.1",
-    "morgan": "^1.10.1"
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
+    "qs": "^6.15.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
     "nodemon": "^3.1.11",
+    "prisma": "^7.4.0",
     "ts-node": "^10.9.2"
   }
 }
