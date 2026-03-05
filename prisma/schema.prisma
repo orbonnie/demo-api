@@ -18,8 +18,8 @@ model Resource {
   barcode     String    @unique
   name        String
   category    String
-  tag         String
-  price       Int
+  tag         String?
+  price       Float
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

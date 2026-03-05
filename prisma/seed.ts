@@ -2,42 +2,52 @@ import dotenv from 'dotenv';
 dotenv.config({ path: './config/config.env' });
 import prisma from '../src/prismaClient';
 
-const users = [
-  { firstName: 'John', lastName: 'Smith', email: 'john.smith@email.com', username: 'johnsmith', bio: 'Love hiking and photography' },
-  { firstName: 'John', lastName: 'Doe', email: 'john.doe@email.com', username: 'johndoe', bio: 'Software engineer by day' },
-  { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@email.com', username: 'janesmith', bio: 'Coffee enthusiast' },
-  { firstName: 'Sarah', lastName: 'Connor', email: 'sarah.connor@email.com', username: 'sarahconnor', bio: 'Fitness and wellness' },
-  { firstName: 'Mike', lastName: 'Johnson', email: 'mike.johnson@email.com', username: 'mikejohnson', bio: 'Traveller and foodie' },
-  { firstName: 'Emily', lastName: 'Davis', email: 'emily.davis@email.com', username: 'emilydavis', bio: null },
-  { firstName: 'Chris', lastName: 'Brown', email: 'chris.brown@email.com', username: 'chrisbrown', bio: 'Music and art lover' },
-  { firstName: 'Anna', lastName: 'Wilson', email: 'anna.wilson@email.com', username: 'annawilson', bio: 'Reading and writing' },
-  { firstName: 'Tom', lastName: 'Miller', email: 'tom.miller@email.com', username: 'tommiller', bio: null },
-  { firstName: 'Lisa', lastName: 'Taylor', email: 'lisa.taylor@email.com', username: 'lisataylor', bio: 'Yoga and meditation' },
-]
+console.log('prisma.resource:', prisma.resource);
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
 
-const main = async () => {
-  console.log('Seeding...')
+const categories = ['Electronics', 'Furniture', 'Stationery', 'Tools', 'Clothing', 'Books', 'Sports', 'Kitchen'];
+const tags = ['new', 'used', 'refurbished', 'sale', 'featured', 'limited', 'popular', 'clearance'];
 
-  for (const user of users) {
-    await prisma.user.upsert({
-      where: { email: user.email },
-      update: {
-        // firstName: user.firstName,
-        bio: user.bio,
-        username: user.username
-      },
-      create: user
-    })
+function randomItem<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateBarcode(index: number): string {
+  const base = 100000000000 + index * 317;
+  return base.toString().padStart(13, '0');
+}
+
+const resources = Array.from({ length: 50 }, (_, i) => {
+  const index = i + 1;
+  const category = randomItem(categories);
+  return {
+    barcode: generateBarcode(index),
+    name: `${category} Item ${index}`,
+    category,
+    tag: randomItem(tags),
+    price: Math.floor(Math.random() * 991) + 10, // 10 to 1000
+    description: index % 3 === 0 ? null : `This is a placeholder description for ${category} Item ${index}.`,
+  };
+});
+
+async function main() {
+  console.log('Seeding resources...');
+
+  await prisma.resource.deleteMany();
+  console.log('Cleared existing resources.');
+
+  for (const resource of resources) {
+    await prisma.resource.create({ data: resource });
   }
 
-  console.log('Seeding complete')
+  console.log(`Successfully seeded ${resources.length} resources.`);
 }
 
 main()
   .catch((e) => {
-    console.error(e)
-    process.exit(1)
+    console.error('Seeding failed:', e);
+    process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma.$disconnect();
+  });
