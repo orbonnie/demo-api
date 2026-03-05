@@ -8,10 +8,6 @@ export const validateUpdateResource = [
 
 ]
 
-export const validateGetResource = [
-
-]
-
-export const validateDeleteResource = [
+export const validateResourceId = [
 
 ]

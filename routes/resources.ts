@@ -12,8 +12,7 @@ import parseQuery from "../middleware/queryParser";
 import {
   validateCreateResource,
   validateUpdateResource,
-  validateGetResource,
-  validateDeleteResource
+  validateResourceId,
 } from "../validation/resources";
 
 import validateRequest from "../middleware/requestValidator";
@@ -21,15 +20,5 @@ import validateRequest from "../middleware/requestValidator";
 
 const router = express.Router();
 
-router
-  .route("/")
-  .get(parseQuery(prisma.user), getResources)
-  .post(validateCreateResource, validateRequest, addResource);
-
-router
-  .route("/:id")
-  .get(validateGetResource, validateRequest, getResource)
-  .put(validateUpdateResource, validateRequest, updateResource)
-  .delete(validateDeleteResource, validateRequest, deleteResource);
 
 export default router;
