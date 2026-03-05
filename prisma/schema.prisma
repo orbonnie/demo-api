@@ -13,17 +13,27 @@ datasource db {
   provider = "postgresql"
 }
 
-model Resource {
-  id          Int       @id @default(autoincrement())
-  barcode     String    @unique
-  name        String
-  category    String
-  tag         String?
-  price       Float
-  description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+model Deploy {
+  id                  String       @id @default(uuid())
+  service_name        String
+  environment         Environment
+  status              Status
+  deployed_at         DateTime
+  version             String
+  deployer            String?
+  created_at          DateTime    @default(now())
 
-  @@index([category, price])
-  @@map("resources")
+  @@map("deploy")
+}
+
+enum Environment {
+  development
+  staging
+  production
+}
+
+enum Status {
+  success
+  failure
+  pending
 }
