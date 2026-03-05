@@ -10,7 +10,7 @@ const PORT = process.env.PORT;
 const ENV = process.env.NODE_ENV;
 
 // Import Routes
-import resources from './routes/resources';
+import deployments from './routes/deployments';
 
 // Import Middleware
 import errorHandler from "./middleware/errorHandler";
@@ -29,7 +29,7 @@ if (ENV === "development") {
 app.use(helmet());
 
 // Mount Routes
-app.use('/api/v1/resources', resources);
+app.use('/api/v1/deploy', deployments);
 
 // Error Handling Middleware
 app.use(errorHandler);
