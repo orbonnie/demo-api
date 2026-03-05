@@ -44,9 +44,10 @@ const parseQuery = (table: any) => async (req: Request, res: Response, next: Nex
 
   // Handle Select
   if (req.query.select) {
-    const selectFields = (req.query.select as string).split(",");
-    parsedQuery.select = Object.fromEntries(
-      selectFields.map((field) => [field, true]),
+    const selectFields = (req.query.select as string).split(",").filter(f => f.length > 0);
+    const selectFilter: any = {}
+    selectFields.forEach(f =>
+      selectFilter[f] = true
     );
   }
 
