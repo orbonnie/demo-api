@@ -16,8 +16,24 @@ const filteredReq = (table: any) => async (req: Request, res: Response, next: Ne
   // // Apply remaining filters to the where clause
   // // - does not account for advanced filter operators
 
+    // input -> {firstName: 'John', lastName: 'Smith', age: '25'}
+    // output -> {firstName: 'John', lastName: 'Smith', age: '25'}
 
   // Apply advanced filters with parsing and cast types
+    // input ->
+    // {
+    //   firstName: 'John',
+    //   age: { gte: '25', lte: '50' },
+    //   lastName: { contains: 'smi' },
+    // }
+
+    // output ->
+    // {
+    //   firstName: { equals: 'John', mode: 'insensitive' },
+    //   age: { gte: 25, lte: 50 },  // cast to numbers
+    //   lastName: { contains: 'smi', mode: 'insensitive' }
+    // },
+
 
     // Create obj to hold custom filters
 
