@@ -37,11 +37,11 @@ const errorHandler = (err: any, req: Request, res: Response, next: NextFunction)
   if (err.code === "P2025") {
     if (req.method === "DELETE") {
       console.log(chalk.yellow("Resource deleted or already removed."));
-      res.status(204).send();
+      return res.status(204).send();
     } else {
       const msg = "Resource not found.";
       console.log(chalk.red(msg));
-    error = new ErrorResponse(msg, 404);
+      error = new ErrorResponse(msg, 404);
     }
   }
 
